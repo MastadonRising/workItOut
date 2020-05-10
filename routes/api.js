@@ -26,7 +26,7 @@ router.put("/api/workouts/:id", ({ body, params }, res) => {
     });
 });
 
-router.post("/api/workouts", ({ body }, res) => {
+router.post("/api/workouts", (req, res) => {
   Workout.create({})
     .then((dbWorkout) => {
       res.json(dbWorkout);
@@ -36,10 +36,11 @@ router.post("/api/workouts", ({ body }, res) => {
     });
 });
 
-router.post("/api/transaction/bulk", ({ body }, res) => {
-  Transaction.insertMany(body)
-    .then((dbTransaction) => {
-      res.json(dbTransaction);
+router.get("/api/workouts/range", (req, res) => {
+  Workout.find({})
+    .limit(7)
+    .then((dbworkouts) => {
+      res.json(dbworkouts);
     })
     .catch((err) => {
       res.status(400).json(err);
